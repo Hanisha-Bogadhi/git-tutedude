@@ -2,5 +2,10 @@
     {"name": "Hani", "age": 20},
     {"name": "Tina", "age": 23},
     {"name": "John", "age": 25}, 
+<<<<<<< HEAD
     {"name": "Alice", "age": 30} 
+=======
+    {"name": "Alice", "age": 30},
+    {"message": "Updated API response","status": "success"}
+>>>>>>> Hanisha-Bogadhi_new
 ]
