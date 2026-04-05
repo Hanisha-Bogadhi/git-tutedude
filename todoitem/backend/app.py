@@ -1,34 +1,36 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
-from pymongo import MongoClient
+from pymongo.mongo_client import MongoClient
 from dotenv import load_dotenv
 import os
+from pymongo.server_api import ServerApi
 
 load_dotenv()
+MONGO_URI = os.getenv('MONGO_URI')
 
-app = Flask(__name__)
-CORS(app)
-
-client = MongoClient(os.getenv("MONGO_URI"))
-db = client[os.getenv("DB_NAME")]
+client = MongoClient(MONGO_URI, server_api=ServerApi('1'))
+db = client.test
 collection = db["todos"]
+app = Flask(__name__)
 
-@app.route("/submittodoitem", methods=["POST"])
+@app.route("/submittodoitem", methods=["GET", "POST"])
+
+@app.route("/submittodoitem", methods=["GET", "POST"])
 def submit_todo_item():
-    data = request.get_json()
 
-    item_name = data.get("itemName")
-    item_description = data.get("itemDescription")
+    if request.method == "POST":
+        item_data = request.get_json()
 
-    if not item_name:
-        return jsonify({"message": "itemName is required"}), 400
+        collection.insert_one({
+            "itemName": item_data.get("itemName"),
+            "itemDescription": item_data.get("itemDescription")
+        })
 
-    collection.insert_one({
-        "itemName": item_name,
-        "itemDescription": item_description
-    })
+        return jsonify({"message": "Saved successfully"}), 201
 
-    return jsonify({"message": "Item saved successfully!"}), 201
+    if request.method == "GET":
+        data = list(collection.find({}, {"_id": 0}))
+        return jsonify(data)
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+
+    app.run(host='0.0.0.0', port=5001, debug=True)
