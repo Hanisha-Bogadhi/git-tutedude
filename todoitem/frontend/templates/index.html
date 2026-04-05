@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List Page</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+        }
+
+        /* New container for centering */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 30vh;
+        }
+
+        .todoitem-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Welcome to To-Do List Page</h2>
+    <div class="container">
+        <div class="todoitem-box">
+            <h2>To-Do Form</h2>
+
+            <form action="/submittodoitem" method="POST">
+                <input type="text" name="itemName" placeholder="Enter Item Name"><br><br>
+                <textarea name="itemDescription" placeholder="Enter description"></textarea><br><br>
+                <button type="submit">Submit</button>
+                
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
